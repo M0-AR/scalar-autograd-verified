@@ -13,8 +13,8 @@ import random
 import time
 
 import common  # noqa: F401
-from micrograd_verified import graphgen
-from micrograd_verified.gradcheck import fit_loglog_slope, gradcheck
+from scalar_autograd_verified import graphgen
+from scalar_autograd_verified.gradcheck import fit_loglog_slope, gradcheck
 
 N_PER_BUCKET = 50
 BUCKETS = (5, 10, 20, 40)

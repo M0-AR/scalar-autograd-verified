@@ -9,7 +9,7 @@ experiments:
 	$(PY) experiments/run_all.py
 
 report:
-	$(PY) -c "from micrograd_verified import report; report.main()"
+	$(PY) -c "from scalar_autograd_verified import report; report.main()"
 
 verify: test experiments
 

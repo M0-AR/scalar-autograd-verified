@@ -20,7 +20,7 @@ from __future__ import annotations
 import random
 
 import common  # noqa: F401
-from micrograd_verified.data import (
+from scalar_autograd_verified.data import (
     chronological_split,
     load_btc_prices,
     load_eth_prices,
@@ -28,10 +28,10 @@ from micrograd_verified.data import (
     make_supervised,
     standardize,
 )
-from micrograd_verified.engine import Value
-from micrograd_verified.gradcheck import gradcheck
-from micrograd_verified.metrics import accuracy, binomial_z_test, majority_baseline, roc_auc
-from micrograd_verified.nn import MLP
+from scalar_autograd_verified.engine import Value
+from scalar_autograd_verified.gradcheck import gradcheck
+from scalar_autograd_verified.metrics import accuracy, binomial_z_test, majority_baseline, roc_auc
+from scalar_autograd_verified.nn import MLP
 
 STEPS = 150
 BATCH = 64

@@ -4,8 +4,8 @@ import sys
 
 sys.path.insert(0, ".")
 
-from micrograd_verified.engine import Value
-from micrograd_verified.nn import MLP
+from scalar_autograd_verified.engine import Value
+from scalar_autograd_verified.nn import MLP
 
 
 def test_parameter_count_lecture_mlp():

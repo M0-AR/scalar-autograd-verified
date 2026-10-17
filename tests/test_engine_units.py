@@ -7,7 +7,7 @@ import pytest
 
 sys.path.insert(0, ".")
 
-from micrograd_verified.engine import Value
+from scalar_autograd_verified.engine import Value
 
 
 def test_forward_values():

@@ -18,9 +18,9 @@ import math
 import random
 
 import common  # noqa: F401
-from micrograd_verified import graphgen
-from micrograd_verified.engine import Value
-from micrograd_verified.gradcheck import central_difference, gradcheck
+from scalar_autograd_verified import graphgen
+from scalar_autograd_verified.engine import Value
+from scalar_autograd_verified.gradcheck import central_difference, gradcheck
 
 N_GRAPHS = 100
 N_OPS = 15

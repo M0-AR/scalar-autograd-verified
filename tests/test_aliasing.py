@@ -11,8 +11,8 @@ import sys
 
 sys.path.insert(0, ".")
 
-from micrograd_verified.engine import Value
-from micrograd_verified.gradcheck import central_difference
+from scalar_autograd_verified.engine import Value
+from scalar_autograd_verified.gradcheck import central_difference
 
 
 def test_self_add():
@@ -116,7 +116,7 @@ def test_buggy_engine_is_wrong_and_gradcheck_catches_it():
 
 
 def test_fanout_direct_gradcheck():
-    from micrograd_verified.gradcheck import gradcheck
+    from scalar_autograd_verified.gradcheck import gradcheck
 
     a = Value(0.7)
     res = gradcheck(lambda: a + a * a + a * a * a, [a])

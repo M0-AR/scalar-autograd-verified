@@ -1,4 +1,4 @@
-# micrograd-verified
+# scalar-autograd-verified
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](pyproject.toml)
@@ -26,7 +26,7 @@
 > 6/6 experiments green**. Open [`preview.html`](preview.html) for the interactive tour: demo video, a live
 > error-law lab, and a 12-question quiz from zero to pro.
 
-**🌐 Live interactive site:** https://m0-ar.github.io/micrograd-verified/ · [preview.html](https://m0-ar.github.io/micrograd-verified/preview.html) · [docs/preview.html](https://m0-ar.github.io/micrograd-verified/docs/preview.html)
+**🌐 Live interactive site:** https://m0-ar.github.io/scalar-autograd-verified/ · [preview.html](https://m0-ar.github.io/scalar-autograd-verified/preview.html) · [docs/preview.html](https://m0-ar.github.io/scalar-autograd-verified/docs/preview.html)
 Locally open [`preview.html`](preview.html) or [`docs/preview.html`](docs/preview.html) —
 Pages setting: Settings → Pages → Deploy from branch → `main` → `/docs` (mirrors make `/` and `/preview.html` work too).
 
@@ -36,7 +36,7 @@ Pages setting: Settings → Pages → Deploy from branch → `main` → `/docs` 
 
 *Above: ~17-second tour built from real outputs — the actual test run (`33 passed`), the actual experiment
 numbers (E1–E6), the actual E1 figure, and the results card. GitHub READMEs strip `<video>`, so this GIF
-plays here and the full 19-second MP4 plays on the [live site](https://m0-ar.github.io/micrograd-verified/preview.html)
+plays here and the full 19-second MP4 plays on the [live site](https://m0-ar.github.io/scalar-autograd-verified/preview.html)
 (also downloadable: [`docs/assets/demo.mp4`](docs/assets/demo.mp4)).*
 
 ---
@@ -71,7 +71,7 @@ plays here and the full 19-second MP4 plays on the [live site](https://m0-ar.git
 
 One idea at a time, each with a real measured number you can check yourself. Everything below is
 reproduced by `make verify` (raw evidence in [`results/`](results/)); the same guide runs interactively —
-with a live lab and a quiz — on the [site](https://m0-ar.github.io/micrograd-verified/preview.html).
+with a live lab and a quiz — on the [site](https://m0-ar.github.io/scalar-autograd-verified/preview.html).
 
 **0 · A derivative is a sensitivity.** How much does `f` move if `x` moves a little? For
 `f(x) = exp(sin x)` at `x₀ = 1`: exactly `f'(1) = cos(1)·e^{sin(1)} ≈ 2.3333`. Every gradient in deep
@@ -119,7 +119,7 @@ version back-propagates **50,000-node** chains (`tests/test_topology.py`).
 **11 · Reproduce all of it.** `git clone` → `pip install -e .` → `make verify`. Claim → script →
 artifact → test: that loop is the entire thesis of this repository.
 
-*Want the full version? The same guide runs interactively on the [live site](https://m0-ar.github.io/micrograd-verified/preview.html),
+*Want the full version? The same guide runs interactively on the [live site](https://m0-ar.github.io/scalar-autograd-verified/preview.html),
 followed by a 12-question quiz (zero → pro) and two live labs. Prefer the paper? Continue into the
 [Abstract](#abstract) below.*
 
@@ -127,12 +127,12 @@ followed by a 12-question quiz (zero → pro) and two live labs. Prefer the pape
 
 **The engine (from scratch, ~100 lines, no core dependencies)**
 
-- `micrograd_verified/engine.py` — `Value` with `+ − × ÷ pow exp tanh relu sigmoid`, one backward closure per op, **iterative** topological sort, `+=` accumulation everywhere.
-- `micrograd_verified/nn.py` — `Module / Neuron / Layer / MLP` with seeded, deterministic init.
-- `micrograd_verified/gradcheck.py` — forward + central differences, PyTorch-default criterion, ε-sweep, log-log fits.
-- `micrograd_verified/graphgen.py` — replayable random expression-DAG generator (bounded, squash-guarded).
-- `micrograd_verified/data.py` + `metrics.py` — frozen-snapshot loaders, leak-free task construction, accuracy / majority baseline / rank-AUC / binomial z-test.
-- `micrograd_verified/report.py` — `results/*.json` → rendered `RESULTS.md` + machine-readable `summary.json`.
+- `scalar_autograd_verified/engine.py` — `Value` with `+ − × ÷ pow exp tanh relu sigmoid`, one backward closure per op, **iterative** topological sort, `+=` accumulation everywhere.
+- `scalar_autograd_verified/nn.py` — `Module / Neuron / Layer / MLP` with seeded, deterministic init.
+- `scalar_autograd_verified/gradcheck.py` — forward + central differences, PyTorch-default criterion, ε-sweep, log-log fits.
+- `scalar_autograd_verified/graphgen.py` — replayable random expression-DAG generator (bounded, squash-guarded).
+- `scalar_autograd_verified/data.py` + `metrics.py` — frozen-snapshot loaders, leak-free task construction, accuracy / majority baseline / rank-AUC / binomial z-test.
+- `scalar_autograd_verified/report.py` — `results/*.json` → rendered `RESULTS.md` + machine-readable `summary.json`.
 
 **The audit (33 tests, 6 suites)** — unit truths, gradcheck methodology (40 random graphs), deliberate-bug forensics, topology invariants, a **PyTorch oracle** (expressions, MLP gradients, and 30-step SGD trajectories match to ≤1e-9 rel.), and end-to-end training (convergence + seeded reproducibility). `python -m pytest tests/` → **33 passed**.
 
@@ -168,12 +168,12 @@ followed by a 12-question quiz (zero → pro) and two live labs. Prefer the pape
 *The site top: the video poster (the real E1 figure), status pills, and the README card.*
 
 - Full video (19 s, real run outputs): [`docs/assets/demo.mp4`](docs/assets/demo.mp4) · GIF version: [`docs/assets/demo.gif`](docs/assets/demo.gif)
-- Try it live: [quiz](https://m0-ar.github.io/micrograd-verified/preview.html#quiz) · [lab](https://m0-ar.github.io/micrograd-verified/preview.html#lab)
+- Try it live: [quiz](https://m0-ar.github.io/scalar-autograd-verified/preview.html#quiz) · [lab](https://m0-ar.github.io/scalar-autograd-verified/preview.html#lab)
 
 ## Quick start (3 steps, impossible to fail)
 
 ```bash
-git clone https://github.com/M0-AR/micrograd-verified && cd micrograd-verified
+git clone https://github.com/M0-AR/scalar-autograd-verified && cd scalar-autograd-verified
 python -m pytest tests/          # 33 passed — no torch required (adds oracle tests if installed)
 python experiments/run_all.py    # E1–E6 in ~2 min → results/*.json + RESULTS.md
 ```
@@ -184,9 +184,9 @@ Site locally: `python3 -m http.server 8000` → `http://localhost:8000/preview.h
 
 ## Get the site online (1 minute)
 
-1. Push: `git init; git add .; git commit -m "micrograd-verified"; gh repo create --public --source=. --push`
+1. Push: `git init; git add .; git commit -m "scalar-autograd-verified"; gh repo create --public --source=. --push`
 2. GitHub → Settings → Pages → Deploy from branch → `main` → `/docs` → Save (a `.nojekyll` ships in both folders so the site is served verbatim).
-3. Open `https://m0-ar.github.io/micrograd-verified/` — this page works as-is: relative paths, no build step. Mirrors: `/preview.html` (root) and `/docs/preview.html`.
+3. Open `https://m0-ar.github.io/scalar-autograd-verified/` — this page works as-is: relative paths, no build step. Mirrors: `/preview.html` (root) and `/docs/preview.html`.
 
 ---
 
@@ -269,7 +269,7 @@ Run: `python -m pytest tests/ -q` → **33 passed**.
 ## 3. The engine
 
 ```
-micrograd_verified/
+scalar_autograd_verified/
 ├── engine.py      Value: +, ×, −, ÷, pow, exp, tanh, relu, sigmoid; iterative topo-sort; backward()
 ├── nn.py          Module / Neuron / Layer / MLP (seeded, deterministic init)
 ├── gradcheck.py   forward & central differences, tolerance criterion, ε-sweep, log-log fits
@@ -441,8 +441,8 @@ docker compose run --rm verify
 ## Appendix A — repository layout
 
 ```
-micrograd-verified/
-├── micrograd_verified/        # the audited library (engine, nn, gradcheck, graphgen, data, metrics, report)
+scalar-autograd-verified/
+├── scalar_autograd_verified/        # the audited library (engine, nn, gradcheck, graphgen, data, metrics, report)
 ├── tests/                     # 6 suites / 33 tests: units, gradcheck, aliasing, topology, torch-oracle, training
 ├── experiments/               # E1–E6, each self-contained and JSON-emitting; run_all.py drives everything
 ├── scripts/
@@ -457,7 +457,7 @@ micrograd-verified/
 ## Appendix B — reproduce one number, start to finish
 
 ```bash
-git clone <this repo> && cd micrograd-verified
+git clone <this repo> && cd scalar-autograd-verified
 python -m pytest tests/test_aliasing.py -q        # the += bug is real and testable
 python experiments/e3_aliasing_bug.py             # → 64% mismatch, 100% caught
 cat results/e3_aliasing_bug.json                  # raw evidence, same numbers

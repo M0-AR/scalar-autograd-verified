@@ -20,7 +20,7 @@ from __future__ import annotations
 import math
 
 import common  # noqa: F401  (sets sys.path)
-from micrograd_verified.gradcheck import epsilon_sweep, fit_loglog_slope
+from scalar_autograd_verified.gradcheck import epsilon_sweep, fit_loglog_slope
 
 X0 = 1.0
 EPS_M = 2.0**-52

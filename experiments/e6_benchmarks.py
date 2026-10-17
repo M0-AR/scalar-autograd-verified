@@ -16,9 +16,9 @@ import time
 import tracemalloc
 
 import common  # noqa: F401
-from micrograd_verified import graphgen
-from micrograd_verified.engine import Value
-from micrograd_verified.nn import MLP
+from scalar_autograd_verified import graphgen
+from scalar_autograd_verified.engine import Value
+from scalar_autograd_verified.nn import MLP
 
 try:
     import torch

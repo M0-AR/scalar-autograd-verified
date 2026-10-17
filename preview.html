@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>micrograd-verified — Backpropagation, Verified (33/33 · 6/6)</title>
+<title>scalar-autograd-verified — Backpropagation, Verified (33/33 · 6/6)</title>
 <meta name="description" content="A from-scratch scalar autograd engine audited against theory, PyTorch, and frozen live-market data. Interactive FD-error lab, the += bug demo, video, figures, quiz. MIT.">
-<meta property="og:title" content="micrograd-verified — Backpropagation, Verified">
+<meta property="og:title" content="scalar-autograd-verified — Backpropagation, Verified">
 <meta property="og:description" content="33/33 tests · 6/6 experiments · every number in the README reproduced by make verify.">
 <style>
 :root{--bg:#0b1220;--card:#111c33;--line:#22345c;--txt:#e8eefc;--mut:#a9b8d6;--acc:#5eead4;--acc2:#a78bfa;--good:#34d399;--bad:#f87171;--warn:#fbbf24}
@@ -57,7 +57,7 @@ canvas{width:100%;max-width:860px;background:#070d1d;border:1px solid var(--line
 <body>
 <header>
 <div class="badges"><span>MIT</span><span>Python 3.12</span><span>Core deps: <b>none</b></span><span><b>33/33 tests</b></span><span><b>6/6 experiments</b></span><span>Docker ready</span></div>
-<h1>micrograd-verified 🔬</h1>
+<h1>scalar-autograd-verified 🔬</h1>
 <p class="sub"><b>Backpropagation — the algorithm behind every neural network — verified from first principles.</b><br>
 A ~100-line scalar autograd engine, audited against the textbook error laws, against PyTorch, and against frozen live-market data.
 Every number in the README is reproduced by one command: <code>make verify</code>.</p>
@@ -76,7 +76,7 @@ Every number in the README is reproduced by one command: <code>make verify</code
 <h2>🎬 Demo video + real screenshots</h2>
 <p>GitHub READMEs strip <code>&lt;video&gt;</code>, so the README shows a GIF and this page plays the full MP4. Both are generated from real run outputs — the actual test run, the actual experiment run, and the actual E1 figure.</p>
 <video controls preload="metadata" poster="docs/assets/e1_finite_difference.png"><source src="docs/assets/demo.mp4" type="video/mp4">Your browser cannot play MP4. See <a href="docs/assets/demo.gif">demo.gif</a>.</video>
-<p><a href="docs/assets/demo.mp4">Download demo.mp4</a> · <a href="docs/assets/demo.gif">demo.gif (README version, 122 KB)</a></p>
+<p><a href="docs/assets/demo.mp4">Download demo.mp4</a> · <a href="docs/assets/demo.gif">demo.gif (README version, 124 KB)</a></p>
 <div class="grid">
 <div><img src="docs/assets/e1_finite_difference.png" alt="Log-log plot of forward and central finite-difference errors with truncation and roundoff trend lines"><p><b>E1 error laws.</b> Truncation climbs as a·hᵖ, roundoff falls as b/h — the V shape is the whole story of gradient checking.</p></div>
 <div><img src="docs/assets/site-lab.png" alt="The interactive finite-difference error lab running in a browser"><p><b>The interactive lab.</b> Drag h, watch the forward &amp; central errors move — computed live in your browser with the same formulas.</p></div>
@@ -99,7 +99,7 @@ Every number in the README is reproduced by one command: <code>make verify</code
 <div class="step"><b>9 · Depth.</b> Recursive topological sort hits Python's ~1000 recursion limit; an iterative stack version back-propagates <b>50,000-node</b> chains (tests/test_topology.py).</div>
 <div class="step"><b>10 · Cost.</b> ≈<b>0.9 µs per node</b> at 4096-node chains vs ≈3.8 µs for scalar PyTorch tensors (≈4×), 588 bytes of Python memory per node, ~1.2k–2.2k training steps/s on a 41-parameter MLP. E6.</div>
 <div class="step"><b>11 · Reproduce all of it.</b> <code>git clone → pip install -e . → make verify</code>. Claim → script → artifact → test: that loop is the entire thesis of this repository.</div>
-<p class="mut">New to the field? Read the <a href="https://github.com/M0-AR/micrograd-verified#readme">README</a> after this page — it's the full paper-style manual, and it links back here for the interactive parts.</p>
+<p class="mut">New to the field? Read the <a href="https://github.com/M0-AR/scalar-autograd-verified#readme">README</a> after this page — it's the full paper-style manual, and it links back here for the interactive parts.</p>
 </section>
 
 <section class="card" id="lab">
@@ -167,7 +167,7 @@ Every number in the README is reproduced by one command: <code>make verify</code
 
 <section class="card" id="quick">
 <h2>🚀 Quick start (3 steps, impossible to fail)</h2>
-<pre>git clone https://github.com/M0-AR/micrograd-verified && cd micrograd-verified
+<pre>git clone https://github.com/M0-AR/scalar-autograd-verified && cd scalar-autograd-verified
 python -m pytest tests/            # 33 passed — no torch required (adds oracle tests if installed)
 python experiments/run_all.py      # E1–E6 in ~2 min → results/*.json + RESULTS.md</pre>
 <p>Or the one-command full check (tests + report): <code>make verify</code>. Container: <code>docker compose run --rm verify</code>.</p>
@@ -185,10 +185,10 @@ python experiments/run_all.py      # E1–E6 in ~2 min → results/*.json + RESU
 
 <section class="card">
 <h2>🌐 Get the site online (1 minute)</h2>
-<ol><li>Push: <code>git init; git add .; git commit -m "micrograd-verified"; gh repo create --public --source=. --push</code></li><li>GitHub → <b>Settings → Pages → Deploy from branch → main → /docs → Save</b> (a <code>.nojekyll</code> ships in both folders so the site is served verbatim).</li><li>Open <code>https://m0-ar.github.io/micrograd-verified/</code> — this page works as-is, relative paths, no build step. Mirrors: <code>/preview.html</code> (root) and <code>/docs/preview.html</code>.</li></ol>
+<ol><li>Push: <code>git init; git add .; git commit -m "scalar-autograd-verified"; gh repo create --public --source=. --push</code></li><li>GitHub → <b>Settings → Pages → Deploy from branch → main → /docs → Save</b> (a <code>.nojekyll</code> ships in both folders so the site is served verbatim).</li><li>Open <code>https://m0-ar.github.io/scalar-autograd-verified/</code> — this page works as-is, relative paths, no build step. Mirrors: <code>/preview.html</code> (root) and <code>/docs/preview.html</code>.</li></ol>
 </section>
 </main>
-<footer>MIT · Reproduce everything: <code>make verify</code> · Raw evidence: <code>results/*.json</code> · Engine: <code>micrograd_verified/engine.py</code> (~100 lines)</footer>
+<footer>MIT · Reproduce everything: <code>make verify</code> · Raw evidence: <code>results/*.json</code> · Engine: <code>scalar_autograd_verified/engine.py</code> (~100 lines)</footer>
 <script>
 /* ---------- Quiz: Scratch -> Pro ---------- */
 const Q=[

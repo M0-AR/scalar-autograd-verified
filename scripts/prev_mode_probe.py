@@ -18,8 +18,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
-from micrograd_verified import graphgen  # noqa: E402
-from micrograd_verified.engine import Value  # noqa: E402
+from scalar_autograd_verified import graphgen  # noqa: E402
+from scalar_autograd_verified.engine import Value  # noqa: E402
 
 SEED = 77
 N_GRAPHS = 60

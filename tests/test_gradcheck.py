@@ -5,9 +5,9 @@ import sys
 
 sys.path.insert(0, ".")
 
-from micrograd_verified import graphgen
-from micrograd_verified.engine import Value
-from micrograd_verified.gradcheck import gradcheck
+from scalar_autograd_verified import graphgen
+from scalar_autograd_verified.engine import Value
+from scalar_autograd_verified.gradcheck import gradcheck
 
 
 def test_gradcheck_quadratic():

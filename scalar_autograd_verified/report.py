@@ -33,7 +33,7 @@ def build():
         (4, "_market_data"), (5, "_determinism"), (6, "_benchmarks"),
     ])
     md = []
-    md.append("# micrograd-verified — experiment results\n")
+    md.append("# scalar-autograd-verified — experiment results\n")
     if e1:
         md.append(f"_Generated {e1['env']['timestamp_utc']} · Python {e1['env']['python']} · "
                   f"numpy {e1['env'].get('numpy')} · torch {e1['env'].get('torch')}_\n")

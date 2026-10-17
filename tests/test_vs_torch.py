@@ -1,4 +1,4 @@
-"""Cross-check micrograd-verified against PyTorch autograd (oracle tests)."""
+"""Cross-check scalar-autograd-verified against PyTorch autograd (oracle tests)."""
 
 import random
 import sys
@@ -9,8 +9,8 @@ sys.path.insert(0, ".")
 
 torch = pytest.importorskip("torch")
 
-from micrograd_verified.engine import Value
-from micrograd_verified.nn import MLP
+from scalar_autograd_verified.engine import Value
+from scalar_autograd_verified.nn import MLP
 
 
 def _rel(a, b, floor=1e-12):

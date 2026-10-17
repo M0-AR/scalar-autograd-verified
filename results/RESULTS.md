@@ -1,4 +1,4 @@
-# micrograd-verified — experiment results
+# scalar-autograd-verified — experiment results
 _Generated 2026-10-17T18:26:36.141310+00:00 · Python 3.12.13 · numpy 2.2.6 · torch 2.13.0+cu130_
 All numbers below were produced by `make experiments` (`python experiments/run_all.py`). Raw data: `results/*.json`. Figures: `results/figures/`.
 ## E1 — Finite-difference error laws (f = exp(sin x), x0 = 1)

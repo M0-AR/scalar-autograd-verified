@@ -14,7 +14,7 @@ def main():
     import e4_market_data
     import e5_determinism
     import e6_benchmarks
-    from micrograd_verified import report
+    from scalar_autograd_verified import report
 
     t0 = time.perf_counter()
     for mod in (

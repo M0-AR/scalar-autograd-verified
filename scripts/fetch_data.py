@@ -20,7 +20,7 @@ DATA = os.path.join(ROOT, "data")
 
 
 def get_json(url: str):
-    req = urllib.request.Request(url, headers={"User-Agent": "micrograd-verified/0.1"})
+    req = urllib.request.Request(url, headers={"User-Agent": "scalar-autograd-verified/0.1"})
     with urllib.request.urlopen(req, timeout=60) as r:
         return json.loads(r.read().decode())
 
