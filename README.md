@@ -26,7 +26,7 @@
 > 6/6 experiments green**. Open [`preview.html`](preview.html) for the interactive tour: demo video, a live
 > error-law lab, and a 12-question quiz from zero to pro.
 
-**🌐 Live interactive site:** https://m0-ar.github.io/scalar-autograd-verified/ · [preview.html](https://m0-ar.github.io/scalar-autograd-verified/preview.html) · [docs/preview.html](https://m0-ar.github.io/scalar-autograd-verified/docs/preview.html)
+**🌐 Live interactive site — click any of these three (same page, all render in the browser):** [/](https://m0-ar.github.io/scalar-autograd-verified/) · [preview.html](https://m0-ar.github.io/scalar-autograd-verified/preview.html) · [docs/preview.html](https://m0-ar.github.io/scalar-autograd-verified/docs/preview.html)
 Locally open [`preview.html`](preview.html) or [`docs/preview.html`](docs/preview.html) —
 Pages setting: Settings → Pages → Deploy from branch → `main` → `/docs` (mirrors make `/` and `/preview.html` work too).
 
