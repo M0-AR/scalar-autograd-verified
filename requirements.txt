@@ -1,0 +1,9 @@
+# Core (engine + experiments)
+numpy>=1.26
+matplotlib>=3.8
+
+# Verification / dev
+pytest>=8.0
+
+# Oracle for cross-checks (tests/test_vs_torch.py skips if absent)
+# torch>=2.3

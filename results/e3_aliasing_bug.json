@@ -1,0 +1,44 @@
+{
+  "experiment": "e3_aliasing_bug",
+  "env": {
+    "python": "3.12.13",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+    "timestamp_utc": "2026-10-17T18:26:36.201492+00:00",
+    "numpy": "2.2.6",
+    "torch": "2.13.0+cu130",
+    "matplotlib": "3.8.4"
+  },
+  "config": {
+    "n_graphs": 100,
+    "n_ops": 15,
+    "n_inputs": 3,
+    "seed": 424242
+  },
+  "case_self_add": {
+    "correct": 2.0,
+    "buggy": 1.0,
+    "fd": 2.0
+  },
+  "case_repeated_product": {
+    "correct": [
+      -1.8,
+      0.8
+    ],
+    "buggy_repeated_sum": [
+      -0.9,
+      0.4
+    ],
+    "fd": [
+      -1.8,
+      0.8
+    ]
+  },
+  "random_dags": {
+    "n": 100,
+    "graphs_with_observable_mismatch_gt_1e-6": 64,
+    "mismatch_fraction": 0.64,
+    "worst_rel_diff": 1.9901158933390655,
+    "median_rel_diff": 0.5,
+    "fraction_caught_by_gradcheck": 0.64
+  }
+}

@@ -1,0 +1,19 @@
+services:
+  verify:
+    build: .
+    image: micrograd-verified:local
+    command: sh -c "python -m pytest tests/ -q && python experiments/run_all.py"
+    volumes:
+      - ./results:/app/results
+
+  tests:
+    build: .
+    image: micrograd-verified:local
+    command: python -m pytest tests/ -q
+
+  experiments:
+    build: .
+    image: micrograd-verified:local
+    command: python experiments/run_all.py
+    volumes:
+      - ./results:/app/results

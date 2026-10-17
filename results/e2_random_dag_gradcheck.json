@@ -1,0 +1,59 @@
+{
+  "experiment": "e2_random_dag_gradcheck",
+  "env": {
+    "python": "3.12.13",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+    "timestamp_utc": "2026-10-17T18:26:36.179189+00:00",
+    "numpy": "2.2.6",
+    "torch": "2.13.0+cu130",
+    "matplotlib": "3.8.4"
+  },
+  "buckets": {
+    "5": {
+      "n": 50,
+      "n_ops": 5,
+      "pass_rate": 1.0,
+      "max_rel_error_median": 4.696847775384767e-11,
+      "max_rel_error_p90": 1.3977796695918903e-10,
+      "max_rel_error_worst": 4.2332638270965234e-08,
+      "seconds_median": 5.468600102176424e-05
+    },
+    "10": {
+      "n": 50,
+      "n_ops": 10,
+      "pass_rate": 1.0,
+      "max_rel_error_median": 5.7739158652534795e-11,
+      "max_rel_error_p90": 1.4878982953680344e-10,
+      "max_rel_error_worst": 2.141192761964969e-09,
+      "seconds_median": 0.00011002199971699156
+    },
+    "20": {
+      "n": 50,
+      "n_ops": 20,
+      "pass_rate": 1.0,
+      "max_rel_error_median": 8.826511605763148e-11,
+      "max_rel_error_p90": 5.220684979780048e-10,
+      "max_rel_error_worst": 7.947141024760899e-07,
+      "seconds_median": 0.00015900000107649248
+    },
+    "40": {
+      "n": 50,
+      "n_ops": 40,
+      "pass_rate": 1.0,
+      "max_rel_error_median": 1.3616099082109304e-10,
+      "max_rel_error_p90": 4.827313761699808e-10,
+      "max_rel_error_worst": 4.777315340993046e-08,
+      "seconds_median": 0.0003303459998278413
+    }
+  },
+  "config": {
+    "n_per_bucket": 50,
+    "n_inputs": 4
+  },
+  "overall_pass_rate": 1.0,
+  "error_growth_vs_depth": {
+    "slope": 0.5218939382258965,
+    "r2": 0.977490544171156,
+    "note": "log-log slope of median max-relative-error vs op count"
+  }
+}

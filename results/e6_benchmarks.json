@@ -1,0 +1,72 @@
+{
+  "experiment": "e6_benchmarks",
+  "env": {
+    "python": "3.12.13",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+    "timestamp_utc": "2026-10-17T18:28:34.960150+00:00",
+    "numpy": "2.2.6",
+    "torch": "2.13.0+cu130",
+    "matplotlib": "3.8.4"
+  },
+  "has_torch": true,
+  "torch_version": "2.13.0+cu130",
+  "chains": {
+    "16": {
+      "L": 16,
+      "micro_s": 1.428500036126934e-05,
+      "micro_ns_per_node": 892.8125225793337,
+      "torch_s": 7.817799996701069e-05,
+      "torch_ns_per_node": 4886.124997938168,
+      "micro_over_torch": 0.1827240447094743
+    },
+    "64": {
+      "L": 64,
+      "micro_s": 4.183899909548927e-05,
+      "micro_ns_per_node": 653.7343608670199,
+      "torch_s": 0.00023522100127593148,
+      "torch_ns_per_node": 3675.3281449364295,
+      "micro_over_torch": 0.17787101861031981
+    },
+    "256": {
+      "L": 256,
+      "micro_s": 0.00020466800015128683,
+      "micro_ns_per_node": 799.4843755909642,
+      "torch_s": 0.000883123000676278,
+      "torch_ns_per_node": 3449.699221391711,
+      "micro_over_torch": 0.2317548065156905
+    },
+    "1024": {
+      "L": 1024,
+      "micro_s": 0.0008341529992321739,
+      "micro_ns_per_node": 814.6025383126698,
+      "torch_s": 0.0035087280011794064,
+      "torch_ns_per_node": 3426.492188651764,
+      "micro_over_torch": 0.23773658116325513
+    },
+    "4096": {
+      "L": 4096,
+      "micro_s": 0.003788643998632324,
+      "micro_ns_per_node": 924.9619137285947,
+      "torch_s": 0.01564493499972741,
+      "torch_ns_per_node": 3819.564208917825,
+      "micro_over_torch": 0.2421642530760489
+    }
+  },
+  "random_dag_2000_ops": {
+    "seconds": 0.0015608379999321187,
+    "us_per_op": 0.7804189999660593
+  },
+  "memory_chain_4096": {
+    "peak_bytes": 2406568,
+    "current_bytes": 2205856,
+    "bytes_per_node_peak": 587.541015625,
+    "note": "tracemalloc sees Python objects only; PyTorch's C++ allocator is invisible to it"
+  },
+  "training_throughput": {
+    "steps": 50,
+    "seconds": 0.02239887499854376,
+    "steps_per_s": 2232.2549683075913,
+    "samples_per_s": 8929.019873230365,
+    "n_params": 41
+  }
+}

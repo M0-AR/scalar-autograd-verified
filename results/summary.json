@@ -1,0 +1,31 @@
+{
+  "e1_forward_optimal_eps": 1e-08,
+  "e1_central_optimal_eps": 3.162277660168379e-06,
+  "e1_forward_trunc_slope": 1.0066346992493307,
+  "e1_central_trunc_slope": 1.9997633275270867,
+  "e2_pass_rate": 1.0,
+  "e2_error_growth_slope": 0.5218939382258965,
+  "e2_median_rel_err_worst_bucket": 1.3616099082109304e-10,
+  "e3_mismatch_fraction": 0.64,
+  "e3_caught_fraction": 0.64,
+  "e4_gradcheck_all_pass": true,
+  "e4_max_gradcheck_rel_err": 1.8169295198223774e-07,
+  "e4_test_acc": {
+    "btc_usd": 0.4861111111111111,
+    "eth_usd": 0.4861111111111111,
+    "eur_usd": 0.5576923076923077,
+    "eur_jpy": 0.5096153846153846
+  },
+  "e4_baseline": {
+    "btc_usd": 0.5138888888888888,
+    "eth_usd": 0.5694444444444444,
+    "eur_usd": 0.5769230769230769,
+    "eur_jpy": 0.5769230769230769
+  },
+  "e5_ordered_reproducible": true,
+  "e5_set_reproducible": false,
+  "e5_set_max_ulp": 1.0,
+  "e6_micro_ns_per_node_4096": 924.9619137285947,
+  "e6_torch_ns_per_node_4096": 3819.564208917825,
+  "e6_steps_per_s": 2232.2549683075913
+}

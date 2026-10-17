@@ -1,0 +1,43 @@
+{
+  "experiment": "e5_determinism",
+  "env": {
+    "python": "3.12.13",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+    "timestamp_utc": "2026-10-17T18:28:34.420079+00:00",
+    "numpy": "2.2.6",
+    "torch": "2.13.0+cu130",
+    "matplotlib": "3.8.4"
+  },
+  "config": {
+    "n_graphs": 60,
+    "n_ops": 50,
+    "hashseeds": [
+      "0",
+      "1",
+      "2"
+    ]
+  },
+  "modes": {
+    "ordered": {
+      "distinct_aggregate_hashes_across_3_processes": 1,
+      "cross_process_bitwise_reproducible": true,
+      "max_ulp_diff_across_processes": 0.0,
+      "graphs_with_any_ulp_diff": 0,
+      "n_graphs": 60,
+      "within_process_rebuild_identical": true,
+      "elapsed_s_median": 0.004778264001288335,
+      "probe_wall_s_median": 0.029567481999038137
+    },
+    "set": {
+      "distinct_aggregate_hashes_across_3_processes": 2,
+      "cross_process_bitwise_reproducible": false,
+      "max_ulp_diff_across_processes": 1.0,
+      "graphs_with_any_ulp_diff": 4,
+      "n_graphs": 60,
+      "within_process_rebuild_identical": false,
+      "elapsed_s_median": 0.005201592000958044,
+      "probe_wall_s_median": 0.023912995000500814
+    }
+  },
+  "set_vs_ordered_max_ulp": 1.0
+}

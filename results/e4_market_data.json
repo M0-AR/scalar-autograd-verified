@@ -1,0 +1,225 @@
+{
+  "experiment": "e4_market_data",
+  "env": {
+    "python": "3.12.13",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+    "timestamp_utc": "2026-10-17T18:28:34.247742+00:00",
+    "numpy": "2.2.6",
+    "torch": "2.13.0+cu130",
+    "matplotlib": "3.8.4"
+  },
+  "config": {
+    "steps": 150,
+    "batch": 64,
+    "lr": 0.05,
+    "n_lags": 3,
+    "vol_window": 5,
+    "model": [
+      8,
+      8,
+      1
+    ]
+  },
+  "datasets": {
+    "btc_usd": {
+      "validation": {
+        "n_points": 365,
+        "first_day": "2025-10-18",
+        "last_day": "2026-10-17",
+        "last_close": 81417.96727673468,
+        "expected_n": 365,
+        "n_ok": true,
+        "expected_last": 81417.97,
+        "rel_diff": 3.3447963918243173e-08,
+        "value_ok": true
+      },
+      "determinism": {
+        "loss_first": 1.7060918790213273,
+        "loss_last": 0.9025045639754657,
+        "rerun_loss_last": 0.9025045639754657,
+        "bitwise_identical": true
+      },
+      "grad_integrity": {
+        "n_params": 121,
+        "rows": 8,
+        "passed": true,
+        "max_abs_error": 1.6603531882708467e-09,
+        "max_rel_error": 5.8090972883453814e-08,
+        "worst_param": -0.6482482129638294
+      },
+      "evaluation": {
+        "n_train": 287,
+        "n_test": 72,
+        "train_accuracy": 0.6202090592334495,
+        "test_accuracy": 0.4861111111111111,
+        "majority_baseline_test": 0.5138888888888888,
+        "test_auc": 0.43783783783783786,
+        "binomial_z": -0.23570226039551595,
+        "binomial_p": 0.8136637157667919,
+        "positive_rate_test": 0.5138888888888888
+      },
+      "loss_curve_sample": [
+        1.7060918790213273,
+        1.1969901421796358,
+        1.0618295749262496,
+        1.0774769869000937,
+        0.971381616225955,
+        0.8365113138098978,
+        0.9137063519406557,
+        0.9481298603635846,
+        0.9200053482421685,
+        1.0064447100508207
+      ]
+    },
+    "eth_usd": {
+      "validation": {
+        "n_points": 365,
+        "first_day": "2025-10-18",
+        "last_day": "2026-10-17",
+        "last_close": 2414.1228364585554,
+        "expected_n": 365,
+        "n_ok": true,
+        "expected_last": 2414.12,
+        "rel_diff": 1.174945137574333e-06,
+        "value_ok": true
+      },
+      "determinism": {
+        "loss_first": 1.4574828904497594,
+        "loss_last": 0.9368963938076881,
+        "rerun_loss_last": 0.9368963938076881,
+        "bitwise_identical": true
+      },
+      "grad_integrity": {
+        "n_params": 121,
+        "rows": 8,
+        "passed": true,
+        "max_abs_error": 1.5357504157265112e-09,
+        "max_rel_error": 3.3040872282105624e-08,
+        "worst_param": 0.3982512891311338
+      },
+      "evaluation": {
+        "n_train": 287,
+        "n_test": 72,
+        "train_accuracy": 0.5749128919860628,
+        "test_accuracy": 0.4861111111111111,
+        "majority_baseline_test": 0.5694444444444444,
+        "test_auc": 0.4209284028324154,
+        "binomial_z": -0.23570226039551595,
+        "binomial_p": 0.8136637157667919,
+        "positive_rate_test": 0.5694444444444444
+      },
+      "loss_curve_sample": [
+        1.4574828904497594,
+        1.3032873930643476,
+        1.0415877898753432,
+        1.0419456037761194,
+        0.938620657565787,
+        0.9501323059999565,
+        0.9433658450443102,
+        0.9468896288600859,
+        0.9343250812825474,
+        1.0546545590184853
+      ]
+    },
+    "eur_usd": {
+      "validation": {
+        "n_points": 522,
+        "first_day": "2024-10-01",
+        "last_day": "2026-10-16",
+        "last_close": 1.1253,
+        "expected_n": 522,
+        "n_ok": true,
+        "expected_last": 1.1253,
+        "rel_diff": 0.0,
+        "value_ok": true
+      },
+      "determinism": {
+        "loss_first": 1.4594070227253764,
+        "loss_last": 0.8901047570399425,
+        "rerun_loss_last": 0.8901047570399425,
+        "bitwise_identical": true
+      },
+      "grad_integrity": {
+        "n_params": 121,
+        "rows": 8,
+        "passed": true,
+        "max_abs_error": 1.3014750388506968e-09,
+        "max_rel_error": 1.3410067204343824e-08,
+        "worst_param": 0.19664651667968167
+      },
+      "evaluation": {
+        "n_train": 412,
+        "n_test": 104,
+        "train_accuracy": 0.5728155339805825,
+        "test_accuracy": 0.5576923076923077,
+        "majority_baseline_test": 0.5769230769230769,
+        "test_auc": 0.4803030303030303,
+        "binomial_z": 1.1766968108291045,
+        "binomial_p": 0.23931654122149526,
+        "positive_rate_test": 0.4230769230769231
+      },
+      "loss_curve_sample": [
+        1.4594070227253764,
+        1.0663094636866635,
+        1.0724806421176856,
+        1.008383946114758,
+        1.035829321035229,
+        0.9315330675980523,
+        0.9565051354760201,
+        0.9341139560199085,
+        0.9863513009613344,
+        0.9325795750133598
+      ]
+    },
+    "eur_jpy": {
+      "validation": {
+        "n_points": 522,
+        "first_day": "2024-10-01",
+        "last_day": "2026-10-16",
+        "last_close": 177.82,
+        "expected_n": 522,
+        "n_ok": true,
+        "expected_last": 177.82,
+        "rel_diff": 0.0,
+        "value_ok": true
+      },
+      "determinism": {
+        "loss_first": 1.2476396928809623,
+        "loss_last": 0.9839945350669502,
+        "rerun_loss_last": 0.9839945350669502,
+        "bitwise_identical": true
+      },
+      "grad_integrity": {
+        "n_params": 121,
+        "rows": 8,
+        "passed": true,
+        "max_abs_error": 1.4400859393859378e-09,
+        "max_rel_error": 1.8169295198223774e-07,
+        "worst_param": 1.0021646463738099
+      },
+      "evaluation": {
+        "n_train": 412,
+        "n_test": 104,
+        "train_accuracy": 0.6019417475728155,
+        "test_accuracy": 0.5096153846153846,
+        "majority_baseline_test": 0.5769230769230769,
+        "test_auc": 0.5602272727272727,
+        "binomial_z": 0.19611613513818332,
+        "binomial_p": 0.8445192674729405,
+        "positive_rate_test": 0.5769230769230769
+      },
+      "loss_curve_sample": [
+        1.2476396928809623,
+        1.0718821390315716,
+        0.9588623955678919,
+        0.9331196332563982,
+        0.9244867495713179,
+        0.9271880406408408,
+        0.9560815280956565,
+        0.9895280709174298,
+        1.028436563212701,
+        0.9284239442002814
+      ]
+    }
+  }
+}

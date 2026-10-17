@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "micrograd-verified"
+version = "0.1.0"
+description = "An empirically verified scalar autograd engine — finite-difference laws, aliasing-bug forensics, live-data gradient checks, and reproducibility benchmarks"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "micrograd-verified contributors" }]
+keywords = ["autograd", "automatic-differentiation", "micrograd", "gradient-checking", "reproducibility"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "torch>=2.3"]
+
+[tool.setuptools]
+packages = ["micrograd_verified"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
