@@ -1,10 +1,192 @@
 # micrograd-verified
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](pyproject.toml)
+[![Tests 33/33](https://img.shields.io/badge/tests-33%2F33_PASS-brightgreen.svg)](tests/)
+[![Experiments 6/6](https://img.shields.io/badge/experiments-6%2F6_PASS-brightgreen.svg)](results/summary.json)
+[![Core deps: none](https://img.shields.io/badge/core_deps-none-success.svg)](pyproject.toml)
+[![Docker ready](https://img.shields.io/badge/Docker-ready-blue.svg)](docker-compose.yml)
+[![Live data verified](https://img.shields.io/badge/live_data-BTC_%2B_ECB_verified-teal.svg)](data/SOURCES.md)
+
 **An empirically verified scalar autograd engine: finite-difference error laws, aliasing-bug forensics, live-market gradient checks, and cross-process reproducibility.**
 
 *A verification study of scalar reverse-mode automatic differentiation, in the tradition of Karpathy's [micrograd](https://github.com/karpathy/micrograd) — re-derived from first principles, then audited against theory, against PyTorch, and against frozen live financial data. Every number in this README is reproduced by `make verify`; raw evidence lives in [`results/*.json`](results/).*
 
 **Snapshot:** 2026-10-17 · Python 3.12.13 · NumPy 2.2.6 · PyTorch 2.13.0+cu130 · 33/33 tests passing · 6/6 experiments verified.
+
+---
+
+> **CEO summary (30 seconds):** Backpropagation trains every neural network on Earth. This repo rebuilds it
+> from scratch in ~100 lines — then does what tutorials don't: it **audits it**. Six experiments reproduce
+> the textbook finite-difference error laws (slopes **+1.006 / +1.9998**, r² = 1.0000), verify gradients on
+> **200/200** random programs against PyTorch's own criterion, quantify the classic `=` vs `+=` aliasing bug
+> (**64%** of random graphs corrupted, **100%** of those caught), check real BTC/ETH/FX losses (null result
+> reported honestly), prove cross-process bitwise reproducibility, and benchmark scalar-per-node cost (≈4×
+> faster than scalar PyTorch tensors). One command reproduces everything: `make verify` — **33/33 tests,
+> 6/6 experiments green**. Open [`preview.html`](preview.html) for the interactive tour: demo video, a live
+> error-law lab, and a 12-question quiz from zero to pro.
+
+**🌐 Live interactive site:** https://m0-ar.github.io/micrograd-verified/ · [preview.html](https://m0-ar.github.io/micrograd-verified/preview.html) · [docs/preview.html](https://m0-ar.github.io/micrograd-verified/docs/preview.html)
+Locally open [`preview.html`](preview.html) or [`docs/preview.html`](docs/preview.html) —
+Pages setting: Settings → Pages → Deploy from branch → `main` → `/docs` (mirrors make `/` and `/preview.html` work too).
+
+**New here?** [Read 🌱 Beginner guide](#-beginner-guide--read-this-and-you-are-a-professional) — one idea at a time, each with a real measured number you can check yourself.
+
+![Demo](docs/assets/demo.gif)
+
+*Above: ~17-second tour built from real outputs — the actual test run (`33 passed`), the actual experiment
+numbers (E1–E6), the actual E1 figure, and the results card. GitHub READMEs strip `<video>`, so this GIF
+plays here and the full 19-second MP4 plays on the [live site](https://m0-ar.github.io/micrograd-verified/preview.html)
+(also downloadable: [`docs/assets/demo.mp4`](docs/assets/demo.mp4)).*
+
+---
+
+## Table of contents
+
+- [🌱 Beginner guide — read this and you are a professional](#-beginner-guide--read-this-and-you-are-a-professional)
+- [Features — everything in one place](#features--everything-in-one-place)
+- [Who is this for? (user stories)](#who-is-this-for-user-stories)
+- [Demo: video + screenshots + quiz](#demo-video--screenshots--quiz)
+- [Quick start (3 steps, impossible to fail)](#quick-start-3-steps-impossible-to-fail)
+- [Get the site online (1 minute)](#get-the-site-online-1-minute)
+- [Abstract](#abstract)
+- [TL;DR — verified claims and where the evidence lives](#tldr--verified-claims-and-where-the-evidence-lives)
+- [1. Introduction](#1-introduction)
+- [2. What is verified, and how](#2-what-is-verified-and-how)
+- [3. The engine](#3-the-engine)
+- [4. Experiments and results](#4-experiments-and-results)
+- [5. The two deliberate deviations from the reference](#5-the-two-deliberate-deviations-from-the-reference)
+- [6. Reproducibility](#6-reproducibility)
+- [7. Limitations and threats to validity](#7-limitations-and-threats-to-validity)
+- [8. Data provenance and licensing](#8-data-provenance-and-licensing)
+- [9. References](#9-references)
+- [Appendix A — repository layout](#appendix-a--repository-layout)
+- [Appendix B — reproduce one number, start to finish](#appendix-b--reproduce-one-number-start-to-finish)
+
+---
+
+## 🌱 Beginner guide — read this and you are a professional
+
+> **You will know more than most interview candidates after this page.**
+
+One idea at a time, each with a real measured number you can check yourself. Everything below is
+reproduced by `make verify` (raw evidence in [`results/`](results/)); the same guide runs interactively —
+with a live lab and a quiz — on the [site](https://m0-ar.github.io/micrograd-verified/preview.html).
+
+**0 · A derivative is a sensitivity.** How much does `f` move if `x` moves a little? For
+`f(x) = exp(sin x)` at `x₀ = 1`: exactly `f'(1) = cos(1)·e^{sin(1)} ≈ 2.3333`. Every gradient in deep
+learning is this, glued together at scale.
+
+**1 · How do we check a derivative? Nudge it.** Forward difference `(f(x+h)−f(x))/h`; central
+`(f(x+h)−f(x−h))/(2h)`. Nudge too big → truncation error ≈ `a·hᵖ`. Nudge too tiny → roundoff ≈ `b/h`.
+Measured optima: `h = 1e-8` (forward) and `3.16e-6` (central). E1 fits the textbook slopes `+1.01` /
+`+2.00` with r² = 1.0000 — the measurement instrument itself is verified.
+
+**2 · A program is a graph.** `y = (a+b)·c` is nodes connected by operations. Each edge has a local
+derivative (∂out/∂in). The chain rule multiplies local derivatives along every path from `y` back to a
+leaf — and **adds** the contributions of different paths.
+
+**3 · The backward pass.** Start at the output with `grad = 1` and walk the nodes in reversed topological
+order. Each node pushes `grad × local-derivative` into its children. That's all backpropagation is.
+
+**4 · The bug every tutorial almost makes: `=` instead of `+=`.** If a leaf is used twice, `y = a + a`,
+the correct gradient is `2.0`; overwriting gives `1.0`. Measured (E3): **64%** of random graphs get
+corrupted — and gradient checking catches **100%** of the corrupted ones.
+
+**5 · The pass criterion.** PyTorch's default: `|analytic−numeric| ≤ 1e-5 + 1e-3·|numeric|`. It is
+necessary but not sufficient: it can't see common-mode errors, or kinks like `relu'(0)`. That's why this
+repo also uses hand-computed gradients and a PyTorch oracle.
+
+**6 · Does it survive randomness?** **200/200** random program DAGs pass, up to 40 ops. Error grows only
+as `depth^0.52` (r² 0.98) — a random walk of roundoff, ≈10⁷× below the threshold (E2).
+
+**7 · Does it survive reality?** Gradients checked on real losses over frozen BTC/ETH/EUR-USD/EUR-JPY
+data: pass at ≤ `1.8e-7` relative. And the honest part: the little model's test accuracy is statistically
+indistinguishable from always predicting the majority class (p ∈ [0.24, 0.85]) — reported as a null
+result (E4). This is a verification demo, not investment advice.
+
+**8 · Bit-for-bit reproducibility.** The reference micrograd stores children in a `set`; iteration order
+follows memory addresses, so different processes can sum gradients in different orders: measured **4/60**
+graphs differ by 1 ulp across processes. Storing an ordered tuple: **0/60** (E5) — the kind of defect
+"it worked on my machine" never sees.
+
+**9 · Depth.** Recursive topological sort hits Python's ~1000 recursion limit; the iterative stack
+version back-propagates **50,000-node** chains (`tests/test_topology.py`).
+
+**10 · Cost.** ≈**0.9 µs per node** at 4096-node chains vs ≈3.8 µs for scalar PyTorch tensors (≈4×),
+**588 bytes** of Python memory per node, ~1.2k–2.2k training steps/s on a 41-parameter MLP (E6).
+
+**11 · Reproduce all of it.** `git clone` → `pip install -e .` → `make verify`. Claim → script →
+artifact → test: that loop is the entire thesis of this repository.
+
+*Want the full version? The same guide runs interactively on the [live site](https://m0-ar.github.io/micrograd-verified/preview.html),
+followed by a 12-question quiz (zero → pro) and two live labs. Prefer the paper? Continue into the
+[Abstract](#abstract) below.*
+
+## Features — everything in one place
+
+**The engine (from scratch, ~100 lines, no core dependencies)**
+
+- `micrograd_verified/engine.py` — `Value` with `+ − × ÷ pow exp tanh relu sigmoid`, one backward closure per op, **iterative** topological sort, `+=` accumulation everywhere.
+- `micrograd_verified/nn.py` — `Module / Neuron / Layer / MLP` with seeded, deterministic init.
+- `micrograd_verified/gradcheck.py` — forward + central differences, PyTorch-default criterion, ε-sweep, log-log fits.
+- `micrograd_verified/graphgen.py` — replayable random expression-DAG generator (bounded, squash-guarded).
+- `micrograd_verified/data.py` + `metrics.py` — frozen-snapshot loaders, leak-free task construction, accuracy / majority baseline / rank-AUC / binomial z-test.
+- `micrograd_verified/report.py` — `results/*.json` → rendered `RESULTS.md` + machine-readable `summary.json`.
+
+**The audit (33 tests, 6 suites)** — unit truths, gradcheck methodology (40 random graphs), deliberate-bug forensics, topology invariants, a **PyTorch oracle** (expressions, MLP gradients, and 30-step SGD trajectories match to ≤1e-9 rel.), and end-to-end training (convergence + seeded reproducibility). `python -m pytest tests/` → **33 passed**.
+
+**The six experiments (E1–E6)** — finite-difference error laws; 200/200 random DAGs under PyTorch-default gradcheck; the `=` vs `+=` aliasing forensics; gradient checks on real live-market losses (with an honest null result); cross-process bitwise reproducibility (`ordered` vs `set`); performance vs scalar PyTorch (time, memory, throughput). Full tables in [§4](#4-experiments-and-results).
+
+**Evidence, not promises** — every claim ships with a script + raw JSON artifact + a test that would fail on regression. `make verify` = tests + all experiments + report. Docker included (`docker compose run --rm verify`).
+
+**Reproducibility controls** — bitwise-reproducible backward pass across processes (E5); the reference's `set` behavior stays available via `MICROGRAD_PREV_MODE=set` for comparison; frozen data snapshots with a cross-validation record in [`data/SOURCES.md`](data/SOURCES.md).
+
+**The interactive site** — `preview.html`: demo video (MP4 + GIF), **two live labs** (drag `h` through the error laws; trigger the `+=` bug yourself), a **12-question quiz** from zero to pro with instant explanations, the experiment table, and this beginner guide. Zero build step; served verbatim via `.nojekyll` on GitHub Pages.
+
+## Who is this for? (user stories)
+
+- 🎓 **Beginner** — read the guide above, run 3 commands, ace the quiz; you'll understand backprop better than most practitioners.
+- 💼 **Interview prep** — the FD error laws, the `+=` bug, determinism, and scalar-vs-tensor cost are classic ML-infra interview material — with measured numbers.
+- 👩‍🏫 **Teacher** — a 90-minute class: play the video, live-run E3 and E1, group-take the quiz.
+- 🔬 **Researcher (PhD track)** — reproduces and extends the FD-error literature; E5's ulp-level hash protocol is reusable for any numeric pipeline.
+- 📈 **Quant / data scientist** — fork `experiments/e4_market_data.py` for your own feed; the gradcheck-on-real-loss harness transfers directly.
+- 🛠️ **Library author** — steal the verification pattern: claim → script → artifact → test, plus the acceptance-test suite.
+
+## Demo: video + screenshots + quiz
+
+![The interactive lab — drag h, watch the error laws](docs/assets/site-lab.png)
+
+*The live error-lab (real screenshot): slider at E1's central optimum `h ≈ 3.16e-6`, markers for both measured optima, the fitted trend lines, and the live KPIs — all computed in the browser.*
+
+![The quiz, graded 12/12 — Pro](docs/assets/site-quiz.png)
+
+*The quiz after a perfect run: instant right/wrong with explanations, then the recap menu.*
+
+![The site top — video poster, badges, README card](docs/assets/site-hero.png)
+
+*The site top: the video poster (the real E1 figure), status pills, and the README card.*
+
+- Full video (19 s, real run outputs): [`docs/assets/demo.mp4`](docs/assets/demo.mp4) · GIF version: [`docs/assets/demo.gif`](docs/assets/demo.gif)
+- Try it live: [quiz](https://m0-ar.github.io/micrograd-verified/preview.html#quiz) · [lab](https://m0-ar.github.io/micrograd-verified/preview.html#lab)
+
+## Quick start (3 steps, impossible to fail)
+
+```bash
+git clone https://github.com/M0-AR/micrograd-verified && cd micrograd-verified
+python -m pytest tests/          # 33 passed — no torch required (adds oracle tests if installed)
+python experiments/run_all.py    # E1–E6 in ~2 min → results/*.json + RESULTS.md
+```
+
+Or the one-command full check (tests + report): `make verify` · Container: `docker compose run --rm verify`.
+
+Site locally: `python3 -m http.server 8000` → `http://localhost:8000/preview.html` (root) or `docs/preview.html`.
+
+## Get the site online (1 minute)
+
+1. Push: `git init; git add .; git commit -m "micrograd-verified"; gh repo create --public --source=. --push`
+2. GitHub → Settings → Pages → Deploy from branch → `main` → `/docs` → Save (a `.nojekyll` ships in both folders so the site is served verbatim).
+3. Open `https://m0-ar.github.io/micrograd-verified/` — this page works as-is: relative paths, no build step. Mirrors: `/preview.html` (root) and `/docs/preview.html`.
 
 ---
 
